@@ -40,7 +40,7 @@ pcs stonith create scsi-shooter fence_scsi pcmk_host_list="$pcs1 $pcs2" devices=
 pcs property set no-quorum-policy=freeze
 pcs stonith show scsi-shooter
 
-pcs resource create my_lvm LVM volgrpname=nssvg exclusive=true op monitor interval=30s timeout=45s on-fail=fence --group nfsgroup
+pcs resource create nfs_lvm LVM volgrpname=nssvg exclusive=true op monitor interval=30s timeout=45s on-fail=fence --group nfsgroup
 
 pcs resource create FsXFS Filesystem device="/dev/nssvg/nsslv" directory="/nssdata" fstype="xfs" options="discard,rw,noatime,allocsize=1g,nobarrier,inode64,logbsize=262144,wsync" op monitor interval=40s on-fail=fence OCF_CHECK_LEVEL=20 --group nfsgroup
 
