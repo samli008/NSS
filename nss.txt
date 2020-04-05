@@ -10,7 +10,7 @@ lvcreate -n nsslv -l 100%free nssvg
 mkfs.xfs /dev/nssvg/nsslv
 mkdir /nssdata
 mount /dev/nssvg/nsslv /nssdata
-umount /nfsshare
+umount /nssdata
 
 # on pcs nodes
 vgs --noheadings -o vg_name
