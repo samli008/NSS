@@ -91,7 +91,6 @@ multipath -ll
 
 mkfs.xfs /dev/mapper/data
 
-tail -l /etc/fstab
-/dev/mapper/data  /data  xfs  _netdev,discard,defaults 0 0
+echo "/dev/mapper/data  /data  xfs  _netdev,discard,defaults 0 0" >> /etc/fstab
 
 mount -a
