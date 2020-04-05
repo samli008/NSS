@@ -25,6 +25,8 @@ dracut -H -f /boot/initramfs-$(uname -r).img $(uname -r)
 # pcs operation
 pcs property list
 pcs resource move vip c06
+pcs standby c07
+pcs unstandby c07
 
 pcs status
 pcs resource
