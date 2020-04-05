@@ -8,10 +8,7 @@ yum -y install targetcli
 systemctl enable target
 systemctl start target
 
-[root@nfs ~]# targetcli
-targetcli shell version 2.1.fb46
-Copyright 2011-2013 by Datera, Inc and others.
-For help on commands, type 'help'.
+[root@c08]# targetcli
 
 /> ls
 o- / .......................................................... [...]
