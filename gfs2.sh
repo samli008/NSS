@@ -2,6 +2,7 @@ echo "choise 1 to install pcs on all nodes."
 echo "choise 2 to config pcs cluster only one node."
 echo "choise 3 to config stonith dlm clvmd only one node."
 echo "choise 4 to config gfs2."
+echo "choise 5 to config vip."
 read -p "pls input your choise [1]: " n
 
 case $n in
@@ -54,9 +55,15 @@ lvcreate -n lv1 -l 100%free vg1
 mkfs.gfs2 -j 2 -p lock_dlm -t cluster1:gfs1 /dev/vg1/lv1
 
 pcs resource create fs ocf:heartbeat:Filesystem device="/dev/vg1/lv1" directory="/data" fstype="gfs2" --clone
-
 pcs constraint order start clvmd-clone then fs-clone
 pcs constraint colocation add fs-clone with clvmd-clone
+;;
+
+5)
+read -p "pls input vip[192.168.20.188]: " vip
+pcs resource create vip ocf:heartbeat:IPaddr2 ip=$vip cidr_netmask=24 op monitor interval=30s
+pcs constraint order start fs-clone then vip
+pcs constraint colocation add vip with fs-clone
 ;;
 
 *)
