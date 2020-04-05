@@ -73,7 +73,7 @@ vi /etc/multipath.conf
 multipaths {
         multipath {
                 wwid                    364ed2aa51864120b621ab51c2b9bf4b1
-                alias                   ps6100
+                alias                   data
                 path_grouping_policy    multibus
                 failback                immediate
                 rr_weight               priorities
@@ -89,9 +89,9 @@ multipath -v2
 systemctl reload multipathd
 multipath -ll
 
-mkfs.xfs /dev/mapper/ps6100
+mkfs.xfs /dev/mapper/data
 
 tail -l /etc/fstab
-/dev/mapper/ps6100  /ps6100  xfs  _netdev,defaults 0 0
+/dev/mapper/data  /data  xfs  _netdev,discard,defaults 0 0
 
 mount -a
