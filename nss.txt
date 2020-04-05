@@ -8,12 +8,16 @@ pvcreate /dev/sdb
 vgcreate nssvg /dev/sdb
 lvcreate -n nsslv -l 100%free nssvg
 mkfs.xfs /dev/nssvg/nsslv
-mkdir /nfsshare
-mount /dev/nssvg/nsslv /nfsshare
+mkdir /nssdata
+mount /dev/nssvg/nsslv /nssdata
 umount /nfsshare
 
 # on pcs nodes
 vgs --noheadings -o vg_name
 volume_list = [ "root", "home" ] # /etc/lvm/lvm.conf
+
+lvmconf -h
+lvmconfig |grep type
+
 lvmconf --enable-halvm --services --startstopservices
 dracut -H -f /boot/initramfs-$(uname -r).img $(uname -r)
