@@ -1,5 +1,5 @@
 # HA-lvm on pcs nodes
-iscsiadm -m discovery -t st -p 192.168.20.8
+iscsiadm -m discovery -t st -p 192.168.20.148
 iscsiadm -m node -l
 fdisk -l |grep sd
 
