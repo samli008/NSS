@@ -1,7 +1,8 @@
 # storage host
 pvcreate /dev/vdb
 vgcreate vg1 /dev/vdb
-lvcreate -n lv1 -L 200g vg1
+lvcreate -n lv1 -L 2g vg1
+lvcreate -n lv2 -L 200g vg2
 
 # iscsi target
 yum -y install targetcli
