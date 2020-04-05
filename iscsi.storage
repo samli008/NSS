@@ -55,3 +55,38 @@ iscsiadm -m discovery -t st -p IP
 iscsiadm -m node -l
 iscsiadm -m node -u
 iscsiadm -m session
+
+[root@c7-1 ~]# cd /var/lib/iscsi/
+[root@c7-1 iscsi]# ls
+ifaces  isns  nodes  send_targets  slp  static
+
+fdisk -l |grep sd
+
+multipath -ll
+
+vi /etc/multipath.conf
+multipaths {
+        multipath {
+                wwid                    364ed2aa51864120b621ab51c2b9bf4b1
+                alias                   ps6100
+                path_grouping_policy    multibus
+                failback                immediate
+                rr_weight               priorities
+                no_path_retry           5
+        }
+#       multipath {
+#               wwid                    1DEC_____321816758474
+#               alias                   red
+#       }
+}
+
+multipath -v2
+systemctl reload multipathd
+multipath -ll
+
+mkfs.xfs /dev/mapper/ps6100
+
+tail -l /etc/fstab
+/dev/mapper/ps6100  /ps6100  xfs  _netdev,defaults 0 0
+
+mount -a
