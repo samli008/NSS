@@ -1,0 +1,19 @@
+# HA-lvm on pcs nodes
+iscsiadm -m discovery -t st -p 192.168.20.8
+iscsiadm -m node -l
+fdisk -l |grep sd
+
+# on one node
+pvcreate /dev/sdb
+vgcreate nssvg /dev/sdb
+lvcreate -n nsslv -l 100%free nssvg
+mkfs.xfs /dev/nssvg/nsslv
+mkdir /nfsshare
+mount /dev/nssvg/nsslv /nfsshare
+umount /nfsshare
+
+# on pcs nodes
+vgs --noheadings -o vg_name
+volume_list = [ "root", "home" ] # /etc/lvm/lvm.conf
+lvmconf --enable-halvm --services --startstopservices
+dracut -H -f /boot/initramfs-$(uname -r).img $(uname -r)
