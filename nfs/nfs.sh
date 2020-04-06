@@ -49,6 +49,8 @@ pcs resource create NFSDaemon nfsserver nfs_shared_infodir=/nssdata/nfsinfo nfsd
 pcs resource create NFSExport exportfs clientspec="*" options="rw,sync,no_root_squash,no_subtree_check,insecure" directory="/nssdata" fsid="55" --group nfsgroup
 
 pcs resource create vip IPaddr2 ip=$vip cidr_netmask=24 op monitor interval=20s OCF_CHECK_LEVEL=10 on-fail=fence --group nfsgroup
+
+pcs resource create NFSnotify nfsnotify source_host=$vip --group nfsgroup
 ;;
 
 *)
