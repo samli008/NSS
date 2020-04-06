@@ -1,6 +1,7 @@
 # config smb.conf on both nodes
 
 yum -y install samba ctdb cifs-utils
+mkdir -p /data/{smb,ctdb}
 
 useradd liyang -s /sbin/nologin
 (echo "liyang"; echo "liyang") | smbpasswd -s -a liyang
