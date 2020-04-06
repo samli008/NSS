@@ -1,6 +1,6 @@
 # config smb.conf on both nodes
 
-yum install samba ctdb cifs-utils
+yum -y install samba ctdb cifs-utils
 
 useradd liyang -s /sbin/nologin
 (echo "liyang"; echo "liyang") | smbpasswd -s -a liyang
@@ -14,9 +14,6 @@ cat > /etc/samba/smb.conf << EOF
         server string = Samba Server Version %v
         security = user
         username map = /etc/samba/smbusers
-        display charset = cp936
-        unix charset = cp936
-        dos charset = cp936
 #        clustering = yes
 #        ctdbd socket = /tmp/ctdb.socket
 [samba]
