@@ -1,4 +1,4 @@
-# create ctdb samba resource
+# create ctdb samba resource on one node
 pcs resource create ctdb ocf:heartbeat:CTDB \
 ctdb_recovery_lock="/data/ctdb/ctdb.lock" \
 ctdb_dbdir=/var/ctdb ctdb_socket=/tmp/ctdb.socket \
