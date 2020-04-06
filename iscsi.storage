@@ -2,7 +2,7 @@
 pvcreate /dev/vdb
 vgcreate vg1 /dev/vdb
 lvcreate -n lv1 -L 2g vg1
-lvcreate -n lv2 -L 200g vg2
+lvcreate -n lv2 -L 200g vg1
 
 # zero lv
 dd if=/dev/zero of=/dev/vg1/lv1 bs=1M count=100
