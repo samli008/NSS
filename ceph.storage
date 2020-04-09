@@ -1,0 +1,35 @@
+# on all nodes
+yum -y install targetcli
+systemctl enable target
+systemctl start target
+
+#create ceph rbd 
+ceph osd pool create rbd 128 128
+ceph osd pool application enable rbd rbd 
+rbd create disk1 -s 200G --image-feature layering
+rbd info disk1
+rbd ls -l
+rbd showmapped
+rbd map disk1 
+rbd unmap disk1
+rbd rm disk1
+
+# ceph rbd map with ocf:ceph:rbd.in on all nodes
+mkdir /usr/lib/ocf/resource.d/ceph/
+cp rbd.in /usr/lib/ocf/resource.d/ceph/
+chmod 755 rbd.in
+dos2unix rbd.in
+
+pcs resource create rbd1 ocf:ceph:rbd.in user="admin" pool="rbd" name="disk1" cephconf="/etc/ceph/ceph.conf"
+
+# pcs iscsi-target agent
+pcs resource create target1 iSCSITarget \
+portals="192.168.20.174" iqn="iqn.2020-04.com.storage:ceph" implementation="lio-t" \
+allowed_initiators="iqn.1994-05.com.redhat:c06"
+
+pcs resource create lun1 iSCSILogicalUnit \
+target_iqn="iqn.2020-04.com.storage:ceph" \
+lun="1" path="/dev/rbd/rbd/disk1"
+
+pcs resource update target1 iSCSITarget \
+allowed_initiators="iqn.1994-05.com.redhat:c06 iqn.1994-05.com.redhat:c07"
