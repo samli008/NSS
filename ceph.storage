@@ -31,5 +31,14 @@ pcs resource create lun1 iSCSILogicalUnit \
 target_iqn="iqn.2020-04.com.storage:ceph" \
 lun="1" path="/dev/rbd/rbd/disk1"
 
+pcs constraint colocation add rbd1 with vip
+pcs constraint colocation add target1 with vip
+pcs constraint colocation add lun1 with vip
+
+pcs constraint order rbd1 then vip
+pcs constraint order vip then target1
+pcs constraint order target1 then lun1
+
+# update iscsi-target config
 pcs resource update target1 iSCSITarget \
 allowed_initiators="iqn.1994-05.com.redhat:c06 iqn.1994-05.com.redhat:c07"
