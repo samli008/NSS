@@ -20,9 +20,14 @@ cp rbd.in /usr/lib/ocf/resource.d/ceph/
 chmod 755 rbd.in
 dos2unix rbd.in
 
+# pcs rbd resource
 pcs resource create rbd1 ocf:ceph:rbd.in user="admin" pool="rbd" name="disk1" cephconf="/etc/ceph/ceph.conf"
 
-# pcs iscsi-target agent
+# pcs vip resource
+read -p "pls input nfs vip [192.168.20.174]: " vip
+pcs resource create vip IPaddr2 ip=$vip cidr_netmask=24 op monitor interval=20s OCF_CHECK_LEVEL=10 on-fail=fence
+
+# pcs iscsi-target resource
 pcs resource create target1 iSCSITarget \
 portals="192.168.20.174" iqn="iqn.2020-04.com.storage:ceph" implementation="lio-t" \
 allowed_initiators="iqn.1994-05.com.redhat:c06"
