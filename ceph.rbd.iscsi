@@ -20,7 +20,7 @@ cp rbd.in /usr/lib/ocf/resource.d/ceph/
 chmod 755 rbd.in
 dos2unix rbd.in
 
-# pcs rbd resource
+# pcs rbd map resource
 pcs resource create rbd1 ocf:ceph:rbd.in user="admin" pool="rbd" name="disk1" cephconf="/etc/ceph/ceph.conf"
 
 # pcs vip resource
