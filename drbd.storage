@@ -61,7 +61,7 @@ drbdsetup status drbd0 --verbose --statistics
 # view and switchover resource role
 drbdadm role drbd0
 drbdadm primary drbd0
-drbdadm secondary
+drbdadm secondary drbd0
 
 # view resource status
 drbdadm dstate data
