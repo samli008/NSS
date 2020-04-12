@@ -66,3 +66,8 @@ drbdadm secondary drbd0
 # view resource status
 drbdadm dstate data
 drbdadm cstate data
+
+# mkfs on /dev/drbd0 umount == secondary; mount == primary
+mkfs.xfs /dev/drbd0
+mount /dev/drbd0 /mnt
+umount /mnt
