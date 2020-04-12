@@ -33,7 +33,7 @@ EOF
 
 cat > /etc/drbd.d/drbd0.res << EOF
 resource drbd0 {
-  disk /dev/vdc;
+  disk /dev/vdb;
   device /dev/drbd0;
   meta-disk internal;
   on c03 {
